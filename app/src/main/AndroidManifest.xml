@@ -12,16 +12,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".SplashActivity">
+        <receiver android:name=".receivers.BatteryLowReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_BATTERY_LOW"/>
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+            </intent-filter>
 
-        <activity android:name=".Tela2Activity" />
+        </activity>
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activities.Tela2Activity" />
+
+        <activity android:name=".activities.MainActivity" />
 
     </application>
 

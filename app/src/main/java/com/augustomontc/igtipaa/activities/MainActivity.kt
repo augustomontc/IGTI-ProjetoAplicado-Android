@@ -1,32 +1,50 @@
-package com.augustomontc.igtipaa
+package com.augustomontc.igtipaa.activities
 
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import com.augustomontc.igtipaa.R
+import com.augustomontc.igtipaa.receivers.BatteryLowReceiver
 
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
+    private val receiver =
+        BatteryLowReceiver()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "MainActivity Created")
         setContentView(R.layout.activity_main)
 
-        val mButton = findViewById<Button>(R.id.proxima_tela_btn)
+        registerBatteryLowReceiver()
+        createButton()
+    }
+
+    // Setup UI/UX
+    private fun registerBatteryLowReceiver() {
+        val filter = IntentFilter(Intent.ACTION_BATTERY_LOW)
+        registerReceiver(receiver, filter)
+    }
+
+    private fun createButton() {
+        val mButton = findViewById<Button>(R.id.btnNextActivity)
         mButton.setOnClickListener {
             startTela2Activity()
         }
     }
 
+    // Actions
     private fun startTela2Activity() {
         val intent = Intent(this, Tela2Activity::class.java)
-        intent.putExtra("aluno", "Augusto Monteiro")
+        intent.putExtra("myName", "Augusto Monteiro")
         startActivity(intent)
     }
 
+    // Life cycle tests
     override fun onStart() {
         super.onStart()
         Log.i(TAG, "MainActivity Started")
